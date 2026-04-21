@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Schul-KI Portal – Anleitung</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--navy:#1a2744;--amber:#f59e0b;--amber-bg:#fef3c7;--bg:#f3f4f8;--surface:#fff;--border:#e4e7ef;--text:#1a1f36;--muted:#64748b;--subtle:#94a3b8;--success:#10b981}
+body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.75;-webkit-font-smoothing:antialiased;padding:2rem 1rem}
+.page{max-width:740px;margin:0 auto}
+
+/* Header */
+.doc-header{background:var(--navy);color:#fff;border-radius:16px;padding:2.5rem 2rem 2rem;margin-bottom:2rem}
+.doc-header h1{font-family:'DM Serif Display',serif;font-size:2rem;margin-bottom:.375rem;color:#fff}
+.doc-header p{font-size:.9rem;color:rgba(255,255,255,.6);line-height:1.5}
+
+/* Prose */
+h1{display:none} /* Hidden – shown in header */
+h2{font-family:'DM Serif Display',serif;font-size:1.375rem;color:var(--navy);margin:2.25rem 0 .75rem;padding-bottom:.5rem;border-bottom:2px solid var(--amber)}
+h3{font-size:1rem;font-weight:600;color:var(--navy);margin:1.5rem 0 .5rem}
+p{margin-bottom:1rem;font-size:.9375rem}
+ul,ol{padding-left:1.25rem;margin-bottom:1rem}
+li{margin-bottom:.375rem;font-size:.9375rem}
+strong{font-weight:600;color:var(--text)}
+a{color:var(--navy);text-underline-offset:3px}
+hr{border:none;border-top:1px solid var(--border);margin:2rem 0}
+code{background:var(--bg);border:1px solid var(--border);border-radius:5px;padding:.125rem .4rem;font-size:.85em;font-family:monospace;color:#5f3dc4}
+pre{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:1rem 1.25rem;overflow-x:auto;margin-bottom:1rem}
+pre code{background:none;border:none;padding:0;font-size:.875rem;color:var(--text)}
+
+/* Blockquote = tip box */
+blockquote{background:var(--amber-bg);border-left:4px solid var(--amber);border-radius:0 10px 10px 0;padding:.875rem 1.125rem;margin:1rem 0 1.25rem;font-size:.875rem;color:#78350f}
+blockquote p{margin:0}
+blockquote strong{color:#78350f}
+
+/* Tables */
+table{width:100%;border-collapse:collapse;margin-bottom:1.25rem;font-size:.875rem;background:var(--surface);border-radius:10px;overflow:hidden;border:1px solid var(--border)}
+thead{background:var(--navy);color:#fff}
+th{padding:.625rem .875rem;text-align:left;font-weight:500;font-size:.8125rem;letter-spacing:.02em}
+td{padding:.5625rem .875rem;border-bottom:1px solid var(--border)}
+tr:last-child td{border-bottom:none}
+tr:nth-child(even) td{background:#fafbfd}
+
+/* Step badges */
+.step{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;background:var(--navy);color:#fff;border-radius:50%;font-size:.75rem;font-weight:600;margin-right:.5rem;vertical-align:middle;flex-shrink:0}
+
+/* Footer */
+.doc-footer{margin-top:3rem;padding-top:1.5rem;border-top:1px solid var(--border);font-size:.8125rem;color:var(--subtle);text-align:center}
+
+@media print{
+  body{background:#fff;padding:0}
+  .doc-header{background:var(--navy)!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  h2{page-break-after:avoid}
+  table{page-break-inside:avoid}
+}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="doc-header">
+    <h1>Schul-KI Portal</h1>
+    <p>Einrichtung &amp; Nutzung — Schritt für Schritt · April 2026</p>
+  </div>
+  <h1>Schul-KI Portal — Anleitung</h1>
+<p><strong>Für wen ist diese Anleitung?</strong>
+Für alle, die das Schul-KI Portal zum ersten Mal einrichten oder nutzen möchten — auch ohne technisches Vorwissen.</p>
+<hr />
+<h2>Was ist das Schul-KI Portal?</h2>
+<p>Das Schul-KI Portal ist eine App, die direkt im Browser läuft. Sie verbindet sich mit einer lokalen KI (Open WebUI + LM Studio), die auf dem Schulserver oder einem eigenen Computer läuft. Alle Daten bleiben in der Schule — nichts wird in die Cloud gesendet.</p>
+<p>Die App hilft beim Schreiben von Elternbriefen, Zeugnistexten, Förderplanen und vielem mehr.</p>
+<hr />
+<h2>Bevor du startest: Was muss laufen?</h2>
+<p>Damit die App funktioniert, müssen zwei Programme auf dem Computer gestartet sein:</p>
+<table>
+<thead>
+<tr>
+<th>Programm</th>
+<th>Wozu</th>
+<th>Muss laufen?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>LM Studio</strong></td>
+<td>Das KI-Gehirn</td>
+<td>✅ Ja, Server muss gestartet sein</td>
+</tr>
+<tr>
+<td><strong>Docker Desktop</strong></td>
+<td>Läuft Open WebUI</td>
+<td>✅ Ja, grünes Symbol oben rechts</td>
+</tr>
+<tr>
+<td><strong>Open WebUI</strong></td>
+<td>Startet automatisch mit Docker</td>
+<td>✅ Automatisch</td>
+</tr>
+<tr>
+<td><strong>Obsidian</strong></td>
+<td>Wissensarchiv (optional)</td>
+<td>Optional</td>
+</tr>
+</tbody>
+</table>
+<p>Wenn du dir nicht sicher bist, ob alles läuft: Öffne den Browser und gib <code>http://localhost:3000</code> ein. Wenn du eine Chat-Oberfläche siehst, ist alles bereit.</p>
+<blockquote>
+<p><strong>Tipp:</strong> Eine detaillierte Installationsanleitung für LM Studio, Docker und Open WebUI findest du in der separaten Setup-Anleitung.</p>
+</blockquote>
+<hr />
+<h2>Die App öffnen</h2>
+<p>Öffne die Datei <code>schul-ki-portal.html</code> per Doppelklick im Browser — oder rufe die Adresse auf, unter der die Datei auf eurem Schulserver liegt.</p>
+<p>Du siehst dann den <strong>Anmeldebildschirm</strong>.</p>
+<hr />
+<h2>Schritt 1 — Ersteinrichtung (einmalig)</h2>
+<p>Beim allerersten Start musst du ein paar Einstellungen vornehmen. Das ist nur einmal nötig.</p>
+<p>Klicke unten auf dem Anmeldebildschirm auf <strong>„Einstellungen / Ersteinrichtung"</strong>.</p>
+<h3>Tab „SSO / Anmeldung"</h3>
+<p>Hier richtest du ein, mit welchem Schul-Konto man sich anmelden kann.</p>
+<table>
+<thead>
+<tr>
+<th>Feld</th>
+<th>Was du einträgst</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>OIDC Issuer URL</strong></td>
+<td>Die Adresse eures Anmeldesystems (von der IT-Abteilung)</td>
+</tr>
+<tr>
+<td><strong>Client-ID</strong></td>
+<td>Eine Nummer aus der App-Registrierung (von der IT-Abteilung)</td>
+</tr>
+<tr>
+<td><strong>Redirect-URI</strong></td>
+<td>Wird automatisch ausgefüllt — einfach so lassen</td>
+</tr>
+<tr>
+<td><strong>Schulname</strong></td>
+<td>z. B. „Mustergymnasium Düsseldorf"</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Noch kein SSO?</strong> Kein Problem — du kannst die App auch ohne Anmeldung im <strong>Demo-Modus</strong> starten (siehe unten).</p>
+</blockquote>
+<h3>Tab „Open WebUI"</h3>
+<table>
+<thead>
+<tr>
+<th>Feld</th>
+<th>Was du einträgst</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Open WebUI URL</strong></td>
+<td><code>http://localhost:3000</code> (Standard, einfach so lassen)</td>
+</tr>
+<tr>
+<td><strong>API-Key</strong></td>
+<td>In Open WebUI unter: Profilbild → Einstellungen → API-Schlüssel</td>
+</tr>
+<tr>
+<td><strong>Standard-Modell</strong></td>
+<td>z. B. <code>meta-llama-3.1-8b-instruct</code></td>
+</tr>
+</tbody>
+</table>
+<p>Klicke auf <strong>Speichern</strong>. Fertig!</p>
+<hr />
+<h2>Schritt 2 — Anmelden</h2>
+<p>Du hast zwei Möglichkeiten:</p>
+<p><strong>Mit SSO anmelden</strong> — Klicke auf den blauen Button. Du wirst zur Schulanmeldung weitergeleitet und danach automatisch zurückgebracht.</p>
+<p><strong>Demo-Modus</strong> — Klicke auf „Demo-Modus (ohne SSO starten)". Du bist sofort drin, ohne Passwort.</p>
+<hr />
+<h2>Die App auf einen Blick</h2>
+<p>Nach der Anmeldung siehst du auf der linken Seite das Menü:</p>
+<pre><code>⌂  Startseite
+💬 Chat
+── Use Cases ──
+1  Elternbriefe
+2  Zeugnisbemerkungen
+3  Konferenzprotokolle
+4  Unterrichtsmaterial
+5  Förderdokumentation
+6  Korrespondenz
+7  Handschrift / OCR
+── Wissen &amp; Vorlagen ──
+✦  Skills-Bibliothek
+◈  Obsidian Vault
+── System ──
+⚙  Einstellungen
+</code></pre>
+<hr />
+<h2>Use Cases nutzen — so funktioniert es</h2>
+<p>Jeder Use Case folgt demselben Prinzip:</p>
+<p><strong>1. Felder ausfüllen</strong> — Gib die nötigen Informationen ein, zum Beispiel Klasse, Anlass, Ton.</p>
+<p><strong>2. Modell wählen</strong> — Unten links kannst du das KI-Modell auswählen. Das Standardmodell passt für die meisten Aufgaben.</p>
+<p><strong>3. Generieren klicken</strong> — Die KI erstellt in wenigen Sekunden einen Entwurf.</p>
+<p><strong>4. Prüfen und kopieren</strong> — Lies das Ergebnis durch, passe es bei Bedarf an und klicke auf „Kopieren". Dann kannst du es in Word, LibreOffice oder deine E-Mail einfügen.</p>
+<blockquote>
+<p><strong>Wichtig:</strong> Die KI liefert immer einen Entwurf. Vor dem Versenden immer selbst prüfen, ob alles stimmt — besonders bei Namen, Daten und Noten.</p>
+</blockquote>
+<h3>Beispiel: Elternbrief schreiben</h3>
+<ol>
+<li>Klicke links auf <strong>„1 Elternbriefe"</strong></li>
+<li>Trage ein: Klasse <code>8b</code>, Anlass <code>Klassenfahrt nach Berlin vom 14.–17. Mai</code>, Kosten <code>185 €</code>, Rückmeldung bis <code>2. Mai</code></li>
+<li>Wähle Ton: <code>freundlich, informativ, professionell</code></li>
+<li>Wähle Format: <code>Formeller Brief mit Briefkopf</code></li>
+<li>Klicke <strong>„▶ Generieren"</strong></li>
+<li>Ergebnis prüfen → <strong>„Kopieren"</strong> → in Word einfügen</li>
+</ol>
+<hr />
+<h2>Chat nutzen</h2>
+<p>Der Chat funktioniert wie ChatGPT — du kannst einfach drauflos schreiben.</p>
+<h3>Direktnachricht schreiben</h3>
+<p>Klicke auf <strong>„💬 Chat"</strong> im Menü, tippe deine Frage ins Textfeld und drücke Enter.</p>
+<h3>Skills im Chat aktivieren</h3>
+<p>Skills sind vorgefertigte Prompt-Bausteine, die du im Chat aktivieren kannst.</p>
+<p><strong>So geht es:</strong></p>
+<ul>
+<li>Tippe <code>/</code> ins Textfeld — ein Menü mit deinen gespeicherten Skills erscheint</li>
+<li>Tippe weiter um zu suchen, z. B. <code>/Elternbrief</code></li>
+<li>Klicke den gewünschten Skill an — er wird als gelber Chip angezeigt</li>
+<li>Schreibe deine Nachricht dazu und drücke Enter</li>
+</ul>
+<p>Du kannst auch mehrere Skills gleichzeitig aktivieren. Der Skill-Kontext wird automatisch mitgeschickt.</p>
+<blockquote>
+<p><strong>Alternativ:</strong> Klicke auf <strong>„✦ Skill auswählen"</strong> unter dem Textfeld.</p>
+</blockquote>
+<hr />
+<h2>Skills-Bibliothek</h2>
+<p>Hier speicherst du deine eigenen Prompt-Bausteine für häufig wiederkehrende Aufgaben.</p>
+<h3>Neuen Skill anlegen</h3>
+<ol>
+<li>Klicke auf <strong>„+ Neuer Skill"</strong></li>
+<li>Trage ein:</li>
+<li><strong>Titel</strong> z. B. „Formeller Briefabschluss"</li>
+<li><strong>Kategorie</strong> z. B. „Formulierungen"</li>
+<li><strong>Tags</strong> z. B. „brief, eltern, formal"</li>
+<li><strong>Inhalt</strong> — der eigentliche Prompt-Text</li>
+<li><strong>Verwendungshinweis</strong> z. B. „Für UC1 und UC6 geeignet"</li>
+<li>Klicke <strong>Speichern</strong></li>
+</ol>
+<h3>Platzhalter nutzen</h3>
+<p>Im Skill-Inhalt kannst du Platzhalter wie <code>{{Klasse}}</code> oder <code>{{Name}}</code> verwenden. Wenn du den Skill einfügst, ersetzt du die Platzhalter manuell mit dem konkreten Wert.</p>
+<h3>Skill in einen Use Case einfügen</h3>
+<p>Öffne einen Use Case, scrolle zu einem Textfeld und klicke auf <strong>„↗ Einfügen"</strong> beim gewünschten Skill.</p>
+<h3>Skills aus der Online-Bibliothek</h3>
+<p>Unter <strong>„Skills-Bibliothek ↗"</strong> findest du fertige Skills von anderen Lehrkräften, die du herunterladen und importieren kannst.</p>
+<p>Skills exportieren/importieren: Klicke auf <strong>„↓ Export"</strong> bzw. <strong>„↑ Import"</strong> — das erzeugt eine <code>.json</code>-Datei, die du mit Kolleginnen und Kollegen teilen kannst.</p>
+<hr />
+<h2>Obsidian Vault (optional)</h2>
+<p>Wenn ihr Obsidian als Wissensarchiv nutzt, könnt ihr Notizen direkt in der App lesen und KI-Ergebnisse dort speichern.</p>
+<h3>Voraussetzung: Plugin installieren</h3>
+<p>In Obsidian:
+1. Einstellungen → Community Plugins → Durchsuchen
+2. Suche nach <strong>„Local REST API"</strong>
+3. Installieren und aktivieren
+4. API-Key kopieren (steht in den Plugin-Einstellungen)
+5. Den Key im Schul-KI Portal unter Einstellungen → Open WebUI eintragen</p>
+<h3>Notiz öffnen und in Prompt einfügen</h3>
+<ol>
+<li>Klicke auf <strong>„◈ Obsidian Vault"</strong></li>
+<li>Klicke auf <strong>„⟳ Verbinden"</strong> — der Dateibaum erscheint</li>
+<li>Klicke auf eine Datei — der Inhalt wird angezeigt</li>
+<li>Klicke auf <strong>„→ In Prompt einfügen"</strong> — wähle das Zielfeld</li>
+</ol>
+<h3>KI-Ergebnis in den Vault speichern</h3>
+<ol>
+<li>Führe einen Use Case aus (z. B. Protokoll generieren)</li>
+<li>Wechsle zu „Obsidian Vault"</li>
+<li>Trage unten einen Pfad ein, z. B. <code>Konferenzprotokolle/2026-04-22.md</code></li>
+<li>Wähle das Use-Case-Ergebnis aus</li>
+<li>Klicke <strong>„↑ In Vault speichern"</strong></li>
+</ol>
+<hr />
+<h2>Häufige Probleme</h2>
+<h3>„Die KI antwortet nicht"</h3>
+<ul>
+<li>Ist LM Studio geöffnet? Ist der Server gestartet (grüner Button)?</li>
+<li>Ist Docker Desktop geöffnet (grünes Symbol)?</li>
+<li>Öffne <code>http://localhost:3000</code> im Browser — lädt die Seite?</li>
+</ul>
+<h3>„Modelle erscheinen nicht"</h3>
+<ul>
+<li>In den Einstellungen: Open WebUI URL auf <code>http://localhost:3000</code> prüfen</li>
+<li>API-Key in Open WebUI neu generieren und eintragen</li>
+<li>Auf <strong>„Modelle neu laden"</strong> klicken (Einstellungen → Seite)</li>
+</ul>
+<h3>„Obsidian Vault lädt nicht"</h3>
+<ul>
+<li>Ist das Plugin „Local REST API" in Obsidian aktiv?</li>
+<li>Ist Obsidian geöffnet?</li>
+<li>API-Key korrekt eingetragen?</li>
+</ul>
+<h3>„SSO funktioniert nicht"</h3>
+<ul>
+<li>Kein Problem — einfach <strong>Demo-Modus</strong> nutzen, bis die IT-Abteilung SSO eingerichtet hat.</li>
+</ul>
+<hr />
+<h2>Datenschutz auf einen Blick</h2>
+<ul>
+<li>Alle Anfragen laufen über den <strong>lokalen Schulserver</strong></li>
+<li><strong>Keine Daten</strong> verlassen das Schulnetzwerk</li>
+<li>Schülerdaten (Noten, Namen) dürfen eingegeben werden, da die KI lokal läuft</li>
+<li>Vor Konferenzaufnahmen: <strong>Einwilligung</strong> aller Anwesenden einholen (DSGVO Art. 6)</li>
+</ul>
+<hr />
+<p><em>Erstellt April 2026 · Schul-KI Portal</em></p>
+  <div class="doc-footer">Schul-KI Portal · Alle Daten bleiben lokal auf dem Schulserver · April 2026</div>
+</div>
+</body>
+</html>
