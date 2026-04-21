@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Schul-KI – Setup-Anleitung</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#1a2744;
+  --navy-mid:#223060;
+  --amber:#f59e0b;
+  --amber-bg:#fef3c7;
+  --bg:#f3f4f8;
+  --surface:#fff;
+  --border:#e4e7ef;
+  --text:#1a1f36;
+  --muted:#64748b;
+  --subtle:#94a3b8;
+  --success:#10b981;
+  --info-bg:#eff6ff;
+  --info-border:#3b82f6;
+  --warn-bg:#fef3c7;
+  --warn-border:#f59e0b;
+  --code-bg:#f0f1f5;
+}
+body{
+  font-family:'DM Sans',system-ui,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.75;
+  -webkit-font-smoothing:antialiased;
+  padding:2rem 1rem;
+}
+.page{max-width:780px;margin:0 auto}
+
+/* ── Header ── */
+.doc-header{
+  background:var(--navy);
+  color:#fff;
+  border-radius:16px;
+  padding:2.5rem 2rem 2rem;
+  margin-bottom:2rem;
+  position:relative;
+  overflow:hidden;
+}
+.doc-header::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:radial-gradient(ellipse at 80% -20%,rgba(245,158,11,.18) 0%,transparent 60%);
+  pointer-events:none;
+}
+.doc-header h1{
+  font-family:'DM Serif Display',serif;
+  font-size:2rem;
+  margin-bottom:.375rem;
+  color:#fff;
+  position:relative;
+}
+.doc-header p{
+  font-size:.875rem;
+  color:rgba(255,255,255,.6);
+  line-height:1.5;
+  position:relative;
+}
+.badge-row{
+  display:flex;
+  flex-wrap:wrap;
+  gap:.5rem;
+  margin-top:1rem;
+  position:relative;
+}
+.badge{
+  display:inline-flex;
+  align-items:center;
+  gap:.35rem;
+  background:rgba(255,255,255,.12);
+  border:1px solid rgba(255,255,255,.2);
+  color:rgba(255,255,255,.85);
+  font-size:.75rem;
+  font-weight:500;
+  padding:.25rem .65rem;
+  border-radius:20px;
+  letter-spacing:.01em;
+}
+
+/* ── Prose ── */
+h2{
+  font-family:'DM Serif Display',serif;
+  font-size:1.375rem;
+  color:var(--navy);
+  margin:2.5rem 0 .75rem;
+  padding-bottom:.5rem;
+  border-bottom:2px solid var(--amber);
+}
+h3{
+  font-size:.9375rem;
+  font-weight:600;
+  color:var(--navy);
+  margin:1.5rem 0 .4rem;
+}
+p{margin-bottom:1rem;font-size:.9375rem}
+ul,ol{padding-left:1.4rem;margin-bottom:1rem}
+li{margin-bottom:.35rem;font-size:.9375rem}
+strong{font-weight:600}
+hr{border:none;border-top:1px solid var(--border);margin:2.25rem 0}
+
+/* ── Code ── */
+code{
+  font-family:'JetBrains Mono',monospace;
+  background:var(--code-bg);
+  border:1px solid var(--border);
+  border-radius:5px;
+  padding:.1rem .4rem;
+  font-size:.82em;
+  color:#5f3dc4;
+}
+pre{
+  background:var(--navy);
+  color:#e2e8f7;
+  border-radius:12px;
+  padding:1.125rem 1.375rem;
+  overflow-x:auto;
+  margin:1rem 0 1.25rem;
+  font-family:'JetBrains Mono',monospace;
+  font-size:.84rem;
+  line-height:1.7;
+}
+pre code{
+  background:none;
+  border:none;
+  padding:0;
+  color:inherit;
+  font-size:inherit;
+}
+
+/* ── Callout boxes ── */
+.tip{
+  background:var(--warn-bg);
+  border-left:4px solid var(--amber);
+  border-radius:0 10px 10px 0;
+  padding:.875rem 1.125rem;
+  margin:1rem 0 1.25rem;
+  font-size:.875rem;
+  color:#78350f;
+}
+.tip p{margin:0;color:#78350f}
+.tip strong{color:#78350f}
+.info{
+  background:var(--info-bg);
+  border-left:4px solid var(--info-border);
+  border-radius:0 10px 10px 0;
+  padding:.875rem 1.125rem;
+  margin:1rem 0 1.25rem;
+  font-size:.875rem;
+  color:#1e40af;
+}
+.info p{margin:0;color:#1e40af}
+.alert{
+  background:#fef2f2;
+  border-left:4px solid #ef4444;
+  border-radius:0 10px 10px 0;
+  padding:.875rem 1.125rem;
+  margin:1rem 0 1.25rem;
+  font-size:.875rem;
+  color:#991b1b;
+}
+.alert p{margin:0;color:#991b1b}
+
+/* ── Step banner ── */
+.step-banner{
+  display:grid;
+  grid-template-columns:auto 1fr;
+  background:var(--navy);
+  border-radius:10px;
+  overflow:hidden;
+  margin:1.25rem 0 .875rem;
+}
+.step-banner__num{
+  background:rgba(255,255,255,.12);
+  color:#fff;
+  font-weight:700;
+  font-size:.8125rem;
+  padding:.625rem 1rem;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  white-space:nowrap;
+  letter-spacing:.04em;
+}
+.step-banner__label{
+  color:#fff;
+  font-weight:500;
+  font-size:.9rem;
+  padding:.625rem 1rem;
+  display:flex;
+  align-items:center;
+}
+
+/* ── Tables ── */
+.table-wrap{overflow-x:auto;margin-bottom:1.25rem;border-radius:10px;border:1px solid var(--border)}
+table{
+  width:100%;
+  border-collapse:collapse;
+  font-size:.875rem;
+  background:var(--surface);
+}
+thead{background:var(--navy);color:#fff}
+th{
+  padding:.625rem .875rem;
+  text-align:left;
+  font-weight:500;
+  font-size:.8125rem;
+  letter-spacing:.02em;
+}
+td{
+  padding:.5625rem .875rem;
+  border-bottom:1px solid var(--border);
+  vertical-align:top;
+}
+tr:last-child td{border-bottom:none}
+tr:nth-child(even) td{background:#fafbfd}
+.tag{
+  display:inline-block;
+  background:rgba(16,185,129,.1);
+  color:#065f46;
+  border-radius:4px;
+  padding:.1rem .45rem;
+  font-size:.75rem;
+  font-weight:600;
+  white-space:nowrap;
+}
+.tag-opt{
+  background:rgba(245,158,11,.1);
+  color:#92400e;
+}
+.tag-new{
+  background:rgba(99,102,241,.12);
+  color:#3730a3;
+}
+.check{color:var(--success);font-weight:700}
+
+/* ── Troubleshooting cards ── */
+.prob{
+  border:1px solid var(--border);
+  border-radius:12px;
+  overflow:hidden;
+  margin-bottom:1rem;
+  background:var(--surface);
+}
+.prob__head{
+  display:flex;
+  align-items:center;
+  gap:.75rem;
+  padding:.75rem 1rem;
+  background:var(--navy);
+  cursor:pointer;
+  user-select:none;
+}
+.prob__icon{
+  width:28px;height:28px;
+  border-radius:50%;
+  background:rgba(255,255,255,.15);
+  display:flex;align-items:center;justify-content:center;
+  font-size:.8rem;
+  font-weight:700;
+  color:#fff;
+  flex-shrink:0;
+}
+.prob__icon.warn{background:rgba(245,158,11,.3)}
+.prob__title{color:#fff;font-weight:600;font-size:.9rem;flex:1}
+.prob__arrow{
+  color:rgba(255,255,255,.5);
+  font-size:.75rem;
+  transition:transform .2s;
+}
+.prob[open] .prob__arrow{transform:rotate(90deg)}
+.prob__body{padding:1rem 1.125rem;font-size:.875rem;color:var(--muted);line-height:1.65}
+.prob__body p{margin:0}
+
+/* ── Daily workflow table ── */
+.workflow-row{
+  display:grid;
+  grid-template-columns:2.5rem 1fr 1fr;
+  gap:1px;
+  background:var(--border);
+}
+.workflow-row:first-child{background:var(--navy);border-radius:10px 10px 0 0}
+.workflow-row:last-child .workflow-cell{border-radius:0 0 10px 10px}
+.workflow-cell{
+  background:var(--surface);
+  padding:.625rem .875rem;
+  font-size:.875rem;
+}
+.workflow-row:first-child .workflow-cell{
+  background:var(--navy);
+  color:#fff;
+  font-weight:500;
+  font-size:.8125rem;
+}
+.workflow-num{
+  display:flex;align-items:center;justify-content:center;
+  background:var(--navy);
+  color:#fff;
+  font-weight:700;
+  font-size:.875rem;
+}
+.workflow-num.opt{background:#e0f2fe;color:#0369a1}
+.wf-wrap{border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:1.25rem}
+
+/* ── Footer ── */
+.doc-footer{
+  margin-top:3rem;
+  padding-top:1.5rem;
+  border-top:1px solid var(--border);
+  font-size:.8125rem;
+  color:var(--subtle);
+  text-align:center;
+}
+
+/* ── Sticky step nav ── */
+.step-nav{
+  position:sticky;
+  top:.75rem;
+  z-index:10;
+  background:rgba(255,255,255,.9);
+  backdrop-filter:blur(10px);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:.625rem 1rem;
+  margin-bottom:2rem;
+  display:flex;
+  flex-wrap:wrap;
+  gap:.375rem;
+}
+.step-nav a{
+  font-size:.75rem;
+  font-weight:600;
+  color:var(--navy);
+  text-decoration:none;
+  padding:.2rem .55rem;
+  border-radius:6px;
+  transition:background .15s;
+}
+.step-nav a:hover{background:var(--amber-bg)}
+
+@media(max-width:520px){
+  .step-nav{display:none}
+  .workflow-row{grid-template-columns:2rem 1fr}
+  .workflow-cell:last-child{display:none}
+}
+
+@media print{
+  body{background:#fff;padding:0}
+  .doc-header{background:var(--navy)!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .step-nav{display:none}
+  h2{page-break-after:avoid}
+  table{page-break-inside:avoid}
+  .prob[open] .prob__body{display:block!important}
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Header -->
+  <div class="doc-header">
+    <h1>Offline-KI Setup-Anleitung</h1>
+    <p>LM Studio · Docker · Open WebUI · Obsidian · Qwen3-TTS &nbsp;·&nbsp; April 2026</p>
+    <div class="badge-row">
+      <span class="badge">🍎 macOS getestet</span>
+      <span class="badge">🔒 Keine Cloud</span>
+      <span class="badge">🏫 Schulserver</span>
+      <span class="badge">⏱ ca. 30 Min</span>
+    </div>
+  </div>
+
+  <!-- Quick-nav -->
+  <nav class="step-nav">
+    <a href="#voraussetzungen">Voraussetzungen</a>
+    <a href="#ueberblick">Überblick</a>
+    <a href="#schritt1">① LM Studio</a>
+    <a href="#schritt2">② Docker</a>
+    <a href="#schritt3">③ Open WebUI</a>
+    <a href="#schritt4">④ Verbinden</a>
+    <a href="#schritt5">⑤ Obsidian</a>
+    <a href="#schritt6">⑥ TTS</a>
+    <a href="#workflow">Tagesablauf</a>
+    <a href="#probleme">Probleme</a>
+  </nav>
+
+  <!-- Voraussetzungen -->
+  <h2 id="voraussetzungen">Was du brauchst</h2>
+  <p>Bevor du anfängst, stelle sicher dass du folgendes hast:</p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Was</th><th>Details</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Hardware</strong></td><td>Mac (Apple Silicon oder Intel) mit mindestens 16 GB RAM</td></tr>
+        <tr><td><strong>Rechte</strong></td><td>Administratorzugang auf dem Computer (zum Installieren von Software)</td></tr>
+        <tr><td><strong>Internet</strong></td><td>Für die einmalige Installation und den Modell-Download</td></tr>
+        <tr><td><strong>Speicher</strong></td><td>Ca. 20 GB freier Speicherplatz für Modelle und Programme</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Überblick -->
+  <h2 id="ueberblick">Überblick: Was wird installiert?</h2>
+  <p>Das System besteht aus mehreren Teilen, die zusammenarbeiten:</p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Programm</th><th>Funktion</th><th>Analogie</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>LM Studio</strong></td>
+          <td>Der KI-Motor</td>
+          <td>Die Hausverwaltung — läuft komplett lokal</td>
+          <td><span class="tag">Pflicht</span></td>
+        </tr>
+        <tr>
+          <td><strong>Docker Desktop</strong></td>
+          <td>Umgebung für Open WebUI</td>
+          <td>Das Haus, in dem Open WebUI sicher läuft</td>
+          <td><span class="tag">Pflicht</span></td>
+        </tr>
+        <tr>
+          <td><strong>Open WebUI</strong></td>
+          <td>Chat-Oberfläche + STT + Bildgenerierung</td>
+          <td>Die Küche — hier tippen Lehrkräfte ihre Anfragen</td>
+          <td><span class="tag">Pflicht</span></td>
+        </tr>
+        <tr>
+          <td><strong>Obsidian</strong></td>
+          <td>Wissensmanagement</td>
+          <td>Die Vorratskammer — alle Schuldokumente durchsuchbar</td>
+          <td><span class="tag tag-opt">Optional</span></td>
+        </tr>
+        <tr>
+          <td><strong>WhisperNotes</strong></td>
+          <td>Audio-Transkription (6,99 € für 2 Macs)</td>
+          <td>Zutat 1 – Basis für z.B. Protokolle</td>
+          <td><span class="tag tag-opt">Optional</span></td>
+        </tr>
+        <tr>
+          <td><strong>EasyScreenOCR</strong></td>
+          <td>Handschrifterkennung</td>
+          <td>Zutat 2 – Basis für formatives Assessment</td>
+          <td><span class="tag tag-opt">Optional</span></td>
+        </tr>
+        <tr>
+          <td><strong>Qwen3-TTS</strong></td>
+          <td>Text-zu-Sprache, lokal (Port 8000)</td>
+          <td>Die Stimme — natürliches Vorlesen auf DE/EN</td>
+          <td><span class="tag tag-new">Neu · Optional</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <hr>
+
+  <!-- Schritt 1 -->
+  <h2 id="schritt1">Schritt 1 — LM Studio installieren</h2>
+
+  <div class="step-banner"><div class="step-banner__num">Schritt 1</div><div class="step-banner__label">LM Studio herunterladen und installieren</div></div>
+  <ol>
+    <li>Öffne im Browser: <code>lmstudio.ai</code></li>
+    <li>Klicke auf „Download for Mac" und lade die <code>.dmg</code>-Datei herunter.</li>
+    <li>Öffne die <code>.dmg</code>-Datei und ziehe LM Studio in den Programme-Ordner.</li>
+    <li>Starte LM Studio.</li>
+  </ol>
+
+  <div class="step-banner"><div class="step-banner__num">Schritt 2</div><div class="step-banner__label">Ein Sprachmodell herunterladen</div></div>
+  <ol>
+    <li>Klicke links auf das Lupen-Symbol <em>(Discover / Suchen)</em>.</li>
+    <li>Suche nach einem dieser Modelle:</li>
+  </ol>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Modell</th><th>Größe</th><th>Empfehlung</th></tr></thead>
+      <tbody>
+        <tr><td><code>meta-llama-3.1-8b-instruct</code></td><td>~5 GB</td><td>Sehr gut für Texte und Verwaltung</td></tr>
+        <tr><td><code>mistral-7b-instruct</code></td><td>~4 GB</td><td>Schnell, gut für kurze Aufgaben</td></tr>
+        <tr><td><code>deepseek-r1-8b</code></td><td>~5 GB</td><td>Gut für komplexere Anfragen</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <ol start="3">
+    <li>Klicke beim gewünschten Modell auf den Download-Pfeil. Der Download dauert je nach Internetgeschwindigkeit 10–30 Minuten.</li>
+  </ol>
+
+  <div class="step-banner"><div class="step-banner__num">Schritt 3</div><div class="step-banner__label">Den lokalen Server starten</div></div>
+  <ol>
+    <li>Klicke auf das Server-Symbol <em>(Local Server / Entwickler)</em>.</li>
+    <li>Wähle im Dropdown ein Modell aus → <strong>„Load Model"</strong>.</li>
+    <li>Klicke auf den grünen Button <strong>„Start Server"</strong>.</li>
+    <li>Zur Kontrolle — öffne im Browser:</li>
+  </ol>
+  <pre><code>http://127.0.0.1:1234/v1/models</code></pre>
+  <p>Du solltest eine Liste mit deinen Modellen sehen — dann läuft alles korrekt.</p>
+  <div class="alert"><p>⚠️ <strong>LM Studio muss immer geöffnet und der Server gestartet sein</strong>, wenn Open WebUI genutzt werden soll. Am besten beim Schulstart automatisch starten lassen.</p></div>
+
+  <hr>
+
+  <!-- Schritt 2 -->
+  <h2 id="schritt2">Schritt 2 — Docker Desktop installieren</h2>
+  <p>Docker ist nötig, damit Open WebUI auf deinem Mac läuft. Die Installation ist einmalig und danach unsichtbar im Hintergrund.</p>
+  <ol>
+    <li>Öffne im Browser: <code>docker.com/products/docker-desktop</code></li>
+    <li>Klicke auf „Download for Mac" — wähle <strong>Apple Silicon</strong> oder <strong>Intel</strong> je nach Mac-Typ.</li>
+    <li>Öffne die <code>.dmg</code>-Datei und ziehe Docker in den Programme-Ordner.</li>
+    <li>Starte Docker Desktop.</li>
+    <li>Warte, bis das Docker-Symbol in der Menüleiste oben rechts <strong>grün</strong> wird.</li>
+  </ol>
+  <div class="info"><p>ℹ️ <strong>Apple Silicon oder Intel?</strong> Klicke oben links auf das Apple-Symbol → „Über diesen Mac". Dort steht entweder „Apple M1/M2/M3" (= Apple Silicon) oder „Intel Core" (= Intel).</p></div>
+
+  <hr>
+
+  <!-- Schritt 3 -->
+  <h2 id="schritt3">Schritt 3 — Open WebUI installieren</h2>
+  <p>Open WebUI ist die Chat-Oberfläche, die Lehrkräfte im Browser nutzen. Sie wird mit einem einzigen Befehl über Docker installiert.</p>
+
+  <div class="step-banner"><div class="step-banner__num">Schritt 1</div><div class="step-banner__label">Terminal öffnen</div></div>
+  <p>Drücke gleichzeitig: <strong>Command ⌘ + Leertaste</strong> → tippe „Terminal" → Enter.</p>
+
+  <div class="step-banner"><div class="step-banner__num">Schritt 2</div><div class="step-banner__label">Open WebUI starten</div></div>
+  <p>Kopiere diesen Befehl vollständig und füge ihn im Terminal ein, dann Enter:</p>
+  <pre><code>docker run -d -p 3000:8080 \
+  --add-host=host.docker.internal:host-gateway \
+  ghcr.io/open-webui/open-webui:main</code></pre>
+  <p>Beim ersten Mal wird Open WebUI heruntergeladen — das dauert einige Minuten. Danach startet es automatisch.</p>
+
+  <div class="step-banner"><div class="step-banner__num">Schritt 3</div><div class="step-banner__label">Im Browser öffnen</div></div>
+  <pre><code>http://localhost:3000</code></pre>
+  <p>Beim ersten Aufruf kannst du ein Admin-Konto anlegen (Name + E-Mail + Passwort). Dieses Konto bleibt lokal auf deinem Computer.</p>
+  <div class="tip"><p>💡 Beim nächsten Neustart des Macs muss Docker Desktop geöffnet werden, damit Open WebUI wieder läuft. Der <code>docker run</code>-Befehl muss <strong>nicht</strong> nochmal ausgeführt werden — Docker startet den Container automatisch.</p></div>
+
+  <hr>
+
+  <!-- Schritt 4 -->
+  <h2 id="schritt4">Schritt 4 — Open WebUI mit LM Studio verbinden</h2>
+  <ol>
+    <li>Öffne Open WebUI: <code>http://localhost:3000</code></li>
+    <li>Klicke oben rechts auf dein Profilbild → <strong>Einstellungen → Verbindungen</strong> (oder Admin-Bereich → Verbindungen).</li>
+    <li>Klicke auf <strong>„Verbindung hinzufügen"</strong>.</li>
+    <li>Trage folgende Werte ein:</li>
+  </ol>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Feld</th><th>Wert</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Verbindungstyp</strong></td><td>Extern</td></tr>
+        <tr><td><strong>URL</strong></td><td><code>http://host.docker.internal:1234/v1</code></td></tr>
+        <tr><td><strong>API-Key</strong></td><td><code>lmstudio</code> (oder ein beliebiges Wort — darf nicht leer sein)</td></tr>
+        <tr><td><strong>Anbietertyp</strong></td><td>OpenAI</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <ol start="5">
+    <li>Klicke auf <strong>„Speichern"</strong>.</li>
+    <li>Klicke auf die zwei Pfeile (Refresh) neben der URL — nach kurzer Zeit erscheinen die Modelle.</li>
+  </ol>
+  <div class="alert"><p>⚠️ Wichtig: Nicht <code>localhost:1234</code>, sondern <code>host.docker.internal:1234</code> verwenden. Docker kann localhost nicht direkt ansprechen.</p></div>
+  <div class="info"><p>✅ Wenn die Modelle in Open WebUI erscheinen, ist alles verbunden. Du kannst jetzt einen ersten Chat-Test machen.</p></div>
+
+  <hr>
+
+  <!-- Schritt 5 -->
+  <h2 id="schritt5">Schritt 5 — Obsidian einrichten <em style="font-size:.8em;font-weight:400;color:var(--muted)">(optional)</em></h2>
+  <p>Obsidian ist das schulinterne Wissenssystem — alle Dokumente werden dort abgelegt und sind per KI durchsuchbar.</p>
+
+  <div class="step-banner"><div class="step-banner__num">Schritt 1</div><div class="step-banner__label">Obsidian installieren</div></div>
+  <ol>
+    <li>Öffne im Browser: <code>obsidian.md</code></li>
+    <li>Lade Obsidian herunter und installiere es wie eine normale App.</li>
+    <li>Starte Obsidian und lege einen neuen Vault an, z.B. <code>Schule-Wissen</code>.</li>
+  </ol>
+
+  <div class="step-banner"><div class="step-banner__num">Schritt 2</div><div class="step-banner__label">Ordnerstruktur anlegen</div></div>
+  <p>Erstelle im Vault folgende Unterordner (per Rechtsklick → Neuer Ordner):</p>
+  <pre><code>Schule-Wissen/
+├── Lernenden-Profile/
+├── Konferenzprotokolle/
+├── Lehrplaene/
+├── Dienstanweisungen/
+├── Materialarchiv/
+└── Vorlagen/</code></pre>
+
+  <div class="step-banner"><div class="step-banner__num">Schritt 3</div><div class="step-banner__label">Community Plugins aktivieren</div></div>
+  <ol>
+    <li>Zahnrad-Symbol unten links → <strong>Community-Plugins</strong></li>
+    <li>Button <strong>„Community-Plugins aktivieren"</strong> klicken → Bestätigen.</li>
+  </ol>
+
+  <div class="step-banner"><div class="step-banner__num">Schritt 4</div><div class="step-banner__label">Plugin „Local Providers" installieren (Pflicht für Local GPT)</div></div>
+  <ol>
+    <li>Einstellungen → Community-Plugins → <strong>Durchsuchen</strong></li>
+    <li>Suche: <code>Local Providers</code> → Installieren → Aktivieren</li>
+    <li>Zahnrad bei Local Providers → URL eintragen:</li>
+  </ol>
+  <pre><code>http://127.0.0.1:1234/v1</code></pre>
+  <p>Kein API-Key erforderlich — Feld leer lassen.</p>
+
+  <div class="step-banner"><div class="step-banner__num">Schritt 5</div><div class="step-banner__label">Plugin „Local GPT" installieren</div></div>
+  <ol>
+    <li>Einstellungen → Community-Plugins → <strong>Durchsuchen</strong></li>
+    <li>Suche: <code>Local GPT</code> → Installieren → Aktivieren</li>
+    <li>Zahnrad bei Local GPT → Provider: <strong>Local Providers</strong> → Modell wählen → Speichern.</li>
+  </ol>
+  <p>Text in Obsidian markieren → Rechtsklick → Local GPT → Aktion auswählen. Die KI antwortet direkt im Dokument.</p>
+  <div class="tip"><p>💡 Obsidian nutzt direkt <code>localhost</code>, weil es nicht in Docker läuft. Deshalb <code>http://127.0.0.1:1234/v1</code> und nicht die Docker-Adresse.</p></div>
+
+  <hr>
+
+  <!-- Schritt 6 – NEU -->
+  <h2 id="schritt6">Schritt 6 — Qwen3-TTS einrichten <em style="font-size:.8em;font-weight:400;color:var(--muted)">(optional · neu)</em></h2>
+  <p>Qwen3-TTS ist eine lokale Text-zu-Sprache-Engine mit natürlich klingenden Stimmen auf Deutsch und Englisch. Die Einrichtung dauert weniger als 5 Minuten. Läuft kein TTS-Server, fällt das Schul-KI Portal automatisch auf die Browser-Systemstimme zurück.</p>
+
+  <div class="step-banner"><div class="step-banner__num">Schritt 1</div><div class="step-banner__label">Qwen3-TTS installieren (einmalig)</div></div>
+  <p>Öffne das Terminal und führe nacheinander aus:</p>
+  <pre><code>pip install qwen-tts
+qwen-tts-demo Qwen/Qwen3-TTS-12Hz-0.6B-CustomVoice --port 8000</code></pre>
+  <div class="tip"><p>💡 Der erste Befehl (<code>pip install</code>) ist nur einmal nötig. Der zweite Befehl startet den TTS-Server und muss nach jedem Neustart des Macs erneut ausgeführt werden.</p></div>
+
+  <div class="step-banner"><div class="step-banner__num">Schritt 2</div><div class="step-banner__label">TTS-URL im Schul-KI Portal eintragen</div></div>
+  <p>Im Schul-KI Portal: <strong>Einstellungen → Tab „Open WebUI"</strong> → Feld <strong>TTS-URL</strong> auf <code>http://localhost:8000</code> setzen → Speichern.</p>
+
+  <h3>Verfügbare Stimmen</h3>
+  <p>Alle fünf Stimmen unterstützen Deutsch und Englisch:</p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Stimme</th><th>Charakter</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Chelsie</strong></td><td>Klar, freundlich</td></tr>
+        <tr><td><strong>Ryan</strong></td><td>Ruhig, professionell</td></tr>
+        <tr><td><strong>Aiden</strong></td><td>Jugendlich, dynamisch</td></tr>
+        <tr><td><strong>Ethan</strong></td><td>Warm, entspannt</td></tr>
+        <tr><td><strong>Serena</strong></td><td>Präzise, sachlich</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>Die Standardstimme kann im Schul-KI Portal unter Einstellungen festgelegt werden.</p>
+
+  <h3>Hinweis: Sprache → Text (STT) und Bildgenerierung</h3>
+  <div class="info"><p>ℹ️ <strong>STT (Whisper)</strong> und <strong>Bildgenerierung</strong> (FLUX / Stable Diffusion / Qwen-Image) benötigen keine separate Installation — sie laufen vollständig über Open WebUI. Voraussetzung: In Open WebUI müssen die Modelle einmalig unter <strong>Admin-Einstellungen → Audio</strong> bzw. <strong>→ Bildgenerierung</strong> aktiviert werden. Bei Fragen: IT-Abteilung kontaktieren.</p></div>
+
+  <hr>
+
+  <!-- Tagesablauf -->
+  <h2 id="workflow">Täglicher Start-Workflow</h2>
+  <p>Das müssen Lehrkräfte jeden Morgen tun, damit das System bereit ist:</p>
+
+  <div class="wf-wrap">
+    <div class="workflow-row" style="background:var(--navy);border-radius:10px 10px 0 0">
+      <div class="workflow-cell" style="background:var(--navy);color:#fff;font-weight:600;font-size:.8rem;display:flex;align-items:center;justify-content:center">#</div>
+      <div class="workflow-cell" style="background:var(--navy);color:#fff;font-weight:600;font-size:.8rem">Aktion</div>
+      <div class="workflow-cell" style="background:var(--navy);color:#fff;font-weight:600;font-size:.8rem">Details</div>
+    </div>
+    <div style="display:grid;grid-template-columns:2.5rem 1fr 1fr;border-top:1px solid var(--border)">
+      <div style="display:flex;align-items:center;justify-content:center;padding:.625rem;background:#fff;border-bottom:1px solid var(--border);font-weight:700;color:var(--navy)">1</div>
+      <div style="padding:.625rem .875rem;background:#fff;border-bottom:1px solid var(--border);border-left:1px solid var(--border);font-size:.875rem"><strong>Docker Desktop öffnen</strong></div>
+      <div style="padding:.625rem .875rem;background:#fff;border-bottom:1px solid var(--border);border-left:1px solid var(--border);font-size:.875rem;color:var(--muted)">Docker-Symbol in der Menüleiste muss grün sein</div>
+    </div>
+    <div style="display:grid;grid-template-columns:2.5rem 1fr 1fr">
+      <div style="display:flex;align-items:center;justify-content:center;padding:.625rem;background:#fafbfd;border-bottom:1px solid var(--border);font-weight:700;color:var(--navy)">2</div>
+      <div style="padding:.625rem .875rem;background:#fafbfd;border-bottom:1px solid var(--border);border-left:1px solid var(--border);font-size:.875rem"><strong>LM Studio öffnen</strong></div>
+      <div style="padding:.625rem .875rem;background:#fafbfd;border-bottom:1px solid var(--border);border-left:1px solid var(--border);font-size:.875rem;color:var(--muted)">Local Server starten (grüner Button), Modell laden</div>
+    </div>
+    <div style="display:grid;grid-template-columns:2.5rem 1fr 1fr">
+      <div style="display:flex;align-items:center;justify-content:center;padding:.625rem;background:#fff;border-bottom:1px solid var(--border);font-weight:700;color:var(--navy)">3</div>
+      <div style="padding:.625rem .875rem;background:#fff;border-bottom:1px solid var(--border);border-left:1px solid var(--border);font-size:.875rem"><strong>Browser öffnen</strong></div>
+      <div style="padding:.625rem .875rem;background:#fff;border-bottom:1px solid var(--border);border-left:1px solid var(--border);font-size:.875rem;color:var(--muted)"><code>http://localhost:3000</code> aufrufen</div>
+    </div>
+    <div style="display:grid;grid-template-columns:2.5rem 1fr 1fr">
+      <div style="display:flex;align-items:center;justify-content:center;padding:.625rem;background:#fafbfd;border-bottom:1px solid var(--border);font-weight:700;color:var(--navy)">4</div>
+      <div style="padding:.625rem .875rem;background:#fafbfd;border-bottom:1px solid var(--border);border-left:1px solid var(--border);font-size:.875rem"><strong>Loslegen</strong></div>
+      <div style="padding:.625rem .875rem;background:#fafbfd;border-bottom:1px solid var(--border);border-left:1px solid var(--border);font-size:.875rem;color:var(--muted)">Modell auswählen und erste Anfrage stellen</div>
+    </div>
+    <div style="display:grid;grid-template-columns:2.5rem 1fr 1fr">
+      <div style="display:flex;align-items:center;justify-content:center;padding:.625rem;background:#eff6ff;border-radius:0 0 0 10px;font-weight:700;color:#0369a1;font-size:.8rem">5*</div>
+      <div style="padding:.625rem .875rem;background:#eff6ff;border-left:1px solid var(--border);font-size:.875rem;border-radius:0"><strong>Qwen3-TTS starten</strong> <span style="font-size:.75rem;color:#0369a1">(optional)</span></div>
+      <div style="padding:.625rem .875rem;background:#eff6ff;border-left:1px solid var(--border);font-size:.8rem;color:#0369a1;border-radius:0 0 10px 0">Terminal: <code>qwen-tts-demo Qwen/Qwen3-TTS-12Hz-0.6B-CustomVoice --port 8000</code></div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- Probleme -->
+  <h2 id="probleme">Häufige Probleme und Lösungen</h2>
+
+  <details class="prob">
+    <summary class="prob__head">
+      <span class="prob__icon warn">!</span>
+      <span class="prob__title">Open WebUI lädt nicht</span>
+      <span class="prob__arrow">▶</span>
+    </summary>
+    <div class="prob__body"><p>Docker Desktop ist nicht gestartet. Docker öffnen und warten bis das Symbol in der Menüleiste grün wird.</p></div>
+  </details>
+
+  <details class="prob">
+    <summary class="prob__head">
+      <span class="prob__icon warn">!</span>
+      <span class="prob__title">Modelle erscheinen nicht in Open WebUI</span>
+      <span class="prob__arrow">▶</span>
+    </summary>
+    <div class="prob__body"><p>URL prüfen: muss <code>http://host.docker.internal:1234/v1</code> sein (nicht localhost). LM Studio Server muss laufen und ein Modell geladen haben.</p></div>
+  </details>
+
+  <details class="prob">
+    <summary class="prob__head">
+      <span class="prob__icon">i</span>
+      <span class="prob__title">LM Studio antwortet nicht</span>
+      <span class="prob__arrow">▶</span>
+    </summary>
+    <div class="prob__body"><p>Browser-Test: <code>http://127.0.0.1:1234/v1/models</code> aufrufen. Wenn leer: in LM Studio Modell neu laden und Server neu starten.</p></div>
+  </details>
+
+  <details class="prob">
+    <summary class="prob__head">
+      <span class="prob__icon">i</span>
+      <span class="prob__title">Obsidian Local GPT findet kein Modell</span>
+      <span class="prob__arrow">▶</span>
+    </summary>
+    <div class="prob__body"><p>Sicherstellen dass <strong>Local Providers</strong> installiert ist (Pflicht!). API-URL gehört in Local Providers, nicht in Local GPT. Einstellungen → Community-Plugins → Local Providers (Zahnrad) → URL: <code>http://127.0.0.1:1234/v1</code>. Kein API-Key nötig.</p></div>
+  </details>
+
+  <details class="prob">
+    <summary class="prob__head">
+      <span class="prob__icon">i</span>
+      <span class="prob__title">TTS klingt wie ein Roboter / kein Qwen3-TTS</span>
+      <span class="prob__arrow">▶</span>
+    </summary>
+    <div class="prob__body"><p>Die App nutzt die Browser-Fallback-Stimme — Qwen3-TTS läuft nicht. Terminal öffnen und ausführen:</p>
+    <pre><code>qwen-tts-demo Qwen/Qwen3-TTS-12Hz-0.6B-CustomVoice --port 8000</code></pre>
+    <p>Danach im Schul-KI Portal: Einstellungen → TTS-URL auf <code>http://localhost:8000</code> prüfen.</p></div>
+  </details>
+
+  <details class="prob">
+    <summary class="prob__head">
+      <span class="prob__icon warn">!</span>
+      <span class="prob__title">Mikrofon / Sprache → Text funktioniert nicht</span>
+      <span class="prob__arrow">▶</span>
+    </summary>
+    <div class="prob__body"><p>Browser fragt beim ersten Klick nach Mikrofon-Erlaubnis — <strong>„Erlauben"</strong> klicken. Open WebUI muss laufen (Whisper-Transkription läuft darüber). Kein Mikrofon erkannt: USB- oder Headset-Mikrofon anschließen und Browser neu laden.</p></div>
+  </details>
+
+  <details class="prob">
+    <summary class="prob__head">
+      <span class="prob__icon">i</span>
+      <span class="prob__title">Bildgenerierung schlägt fehl</span>
+      <span class="prob__arrow">▶</span>
+    </summary>
+    <div class="prob__body"><p>In Open WebUI muss ein Bildgenerierungs-Modell aktiviert sein: <strong>Admin-Einstellungen → Bildgenerierung</strong>. Unterstützte Modelle: FLUX, Stable Diffusion, Qwen-Image. Beim ersten Einsatz muss das Modell einmalig heruntergeladen werden — IT-Abteilung kontaktieren.</p></div>
+  </details>
+
+  <details class="prob">
+    <summary class="prob__head">
+      <span class="prob__icon">i</span>
+      <span class="prob__title">open-webui: command not found</span>
+      <span class="prob__arrow">▶</span>
+    </summary>
+    <div class="prob__body"><p>Nicht über <code>pip</code> installieren — Docker-Variante verwenden (Schritt 2 und 3 dieser Anleitung).</p></div>
+  </details>
+
+  <div class="doc-footer">
+    Schul-KI Setup-Anleitung · Alle Schritte auf macOS getestet · Keine Cloud, keine Datenweitergabe · April 2026
+  </div>
+
+</div>
+
+<script>
+// Make details elements toggle the arrow indicator smoothly
+document.querySelectorAll('details.prob').forEach(el => {
+  el.addEventListener('toggle', () => {
+    const arrow = el.querySelector('.prob__arrow');
+    if (arrow) arrow.style.transform = el.open ? 'rotate(90deg)' : '';
+  });
+});
+</script>
+
+</body>
+</html>
